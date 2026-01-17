@@ -38,8 +38,19 @@ export async function POST(request: NextRequest) {
 
     // Retrieve relevant context using RAG
     console.log('[Chat] Retrieving context...')
-    const { context, sources } = await retrieveContext(message, projectId)
-    console.log('[Chat] Context retrieved, sources:', sources.length)
+    let context = ''
+    let sources: any[] = []
+
+    try {
+      const ragResult = await retrieveContext(message, projectId)
+      context = ragResult.context
+      sources = ragResult.sources
+      console.log('[Chat] Context retrieved, sources:', sources.length)
+    } catch (error) {
+      console.warn('[Chat] RAG retrieval failed, continuing without context:', error)
+      context = 'No document context available. Please answer based on general knowledge.'
+      sources = []
+    }
 
     // Get conversation history
     const messages = await getMessagesByConversationId(convId)

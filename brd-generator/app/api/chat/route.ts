@@ -74,8 +74,10 @@ export async function POST(request: NextRequest) {
     })
   } catch (error) {
     console.error('Chat error:', error)
+    const errorMessage = error instanceof Error ? error.message : 'Failed to generate response'
+    console.error('Error details:', errorMessage)
     return NextResponse.json(
-      { error: 'Failed to generate response' },
+      { error: errorMessage },
       { status: 500 }
     )
   }

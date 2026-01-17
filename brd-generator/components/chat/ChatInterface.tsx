@@ -48,7 +48,9 @@ export default function ChatInterface({ projectId }: ChatInterfaceProps) {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to get response')
+        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+        console.error('API Error:', errorData)
+        throw new Error(errorData.error || 'Failed to get response')
       }
 
       // Get conversation ID from headers

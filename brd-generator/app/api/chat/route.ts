@@ -34,9 +34,12 @@ export async function POST(request: NextRequest) {
 
     // Save user message
     await createMessage(convId, 'user', message)
+    console.log('[Chat] User message saved')
 
     // Retrieve relevant context using RAG
+    console.log('[Chat] Retrieving context...')
     const { context, sources } = await retrieveContext(message, projectId)
+    console.log('[Chat] Context retrieved, sources:', sources.length)
 
     // Get conversation history
     const messages = await getMessagesByConversationId(convId)
@@ -44,9 +47,12 @@ export async function POST(request: NextRequest) {
       role: m.role as 'user' | 'assistant',
       content: m.content,
     }))
+    console.log('[Chat] Conversation history loaded, messages:', conversationHistory.length)
 
     // Generate streaming response
+    console.log('[Chat] Calling OpenAI...')
     const stream = await streamChatResponse(conversationHistory, context)
+    console.log('[Chat] Stream created successfully')
 
     // Create a readable stream that saves the complete response
     let fullResponse = ''
@@ -75,9 +81,11 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Chat error:', error)
     const errorMessage = error instanceof Error ? error.message : 'Failed to generate response'
+    const errorStack = error instanceof Error ? error.stack : undefined
     console.error('Error details:', errorMessage)
+    console.error('Error stack:', errorStack)
     return NextResponse.json(
-      { error: errorMessage },
+      { error: errorMessage, stack: errorStack },
       { status: 500 }
     )
   }

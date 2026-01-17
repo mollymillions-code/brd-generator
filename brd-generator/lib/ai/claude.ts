@@ -22,7 +22,7 @@ ${context}`
 
   const response = await openai.chat.completions.create({
     model: 'gpt-5-mini',
-    max_tokens: 4096,
+    max_completion_tokens: 4096,
     messages: [
       {
         role: 'system',
@@ -51,7 +51,7 @@ ${context}`
 
   const stream = await openai.chat.completions.create({
     model: 'gpt-5-mini',
-    max_tokens: 4096,
+    max_completion_tokens: 4096,
     stream: true,
     messages: [
       {
@@ -124,7 +124,7 @@ Format the output in markdown with proper headings, tables, and bullet points. B
 
   const response = await openai.chat.completions.create({
     model: 'gpt-5-mini',
-    max_tokens: 8192,
+    max_completion_tokens: 8192,
     messages: [
       {
         role: 'user',

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from './supabase-auth'
 
 export async function requireAuth(request: NextRequest) {
-  const supabase = createServerClient()
+  const supabase = await createServerClient()
 
   const {
     data: { session },
@@ -19,7 +19,7 @@ export async function requireAuth(request: NextRequest) {
 }
 
 export async function getAuthUser() {
-  const supabase = createServerClient()
+  const supabase = await createServerClient()
 
   const {
     data: { user },

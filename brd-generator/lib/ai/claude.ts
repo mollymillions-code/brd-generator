@@ -21,7 +21,7 @@ Context from knowledge base:
 ${context}`
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-5-mini',
+    model: 'gpt-5-mini-2025-08-07',
     max_tokens: 4096,
     messages: [
       {
@@ -50,7 +50,7 @@ Context from knowledge base:
 ${context}`
 
   const stream = await openai.chat.completions.create({
-    model: 'gpt-5-mini',
+    model: 'gpt-5-mini-2025-08-07',
     max_tokens: 4096,
     stream: true,
     messages: [
@@ -123,7 +123,7 @@ Generate a detailed BRD with these sections:
 Format the output in markdown with proper headings, tables, and bullet points. Be thorough and professional.`
 
   const response = await openai.chat.completions.create({
-    model: 'gpt-5-mini',
+    model: 'gpt-5-mini-2025-08-07',
     max_tokens: 8192,
     messages: [
       {
